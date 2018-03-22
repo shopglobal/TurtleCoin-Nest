@@ -339,7 +339,7 @@ func requestStatus() (blockCount int, knownBlockCount int, peerCount int, err er
 // SendTransaction makes a transfer with the provided information
 func SendTransaction(transferAddress string, transferAmountString string, transferPaymentID string) (transactionHash string, err error) {
 
-	if !strings.HasPrefix(transferAddress, "TRTL") || len(transferAddress) != 99 {
+	if !strings.HasPrefix(transferAddress, "XS") {
 
 		return "", errors.New("address is invalid")
 
@@ -351,8 +351,8 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 
 	}
 
-	var transferFee float64 = 1 // transferFee is expressed in TRTL
-	transferMixin := 4
+	var transferFee float64 = 400000000 // transferFee is expressed in TRTL
+	transferMixin :=54
 
 	transferAmount, err := strconv.ParseFloat(transferAmountString, 64) // transferAmount is expressed in TRTL
 
@@ -364,7 +364,7 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 
 	if transferAmount <= 0 {
 
-		return "", errors.New("amount of TRTL to be sent should be greater than 0")
+		return "", errors.New("amount of XSM to be sent should be greater than 0")
 
 	}
 
@@ -376,12 +376,12 @@ func SendTransaction(transferAddress string, transferAmountString string, transf
 
 	if transferAmount > 5000000 {
 
-		return "", errors.New("for sending more than 5,000,000 TRTL to one address, you should split in multiple transfers of smaller amounts")
+		return "", errors.New("for sending more than 5,000,000 XSN to one address, you should split in multiple transfers of smaller amounts")
 
 	}
 
-	transferAmountInt := int(transferAmount * 100) // transferAmountInt is expressed in hundredth of TRTL
-	transferFeeInt := int(transferFee * 100)       // transferFeeInt is expressed in hundredth of TRTL
+	transferAmountInt := int(transferAmount * 1000000000) // transferAmountInt is expressed in hundredth of XSM
+	transferFeeInt := int(transferFee * 1000000000)       // transferFeeInt is expressed in hundredth of XSM
 
 	args := make(map[string]interface{})
 
